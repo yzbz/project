@@ -33,7 +33,7 @@ fi
 
 # Display PHP error's or not
 if [[ "$ERRORS" != "1" ]] ; then
-  php_flag[display_errors] = off >> /etc/php5/php-fpm.conf
+  echo php_flag[display_errors] = off >> /etc/php5/php-fpm.conf
 else
  echo php_flag[display_errors] = on >> /etc/php5/php-fpm.conf
 fi
@@ -51,7 +51,8 @@ if [[ "$TEMPLATE_NGINX_HTML" == "1" ]] ; then
   done
 fi
 
-render-templates.sh $WWWROOT/Conf $WWWROOT/Conf
+#render-templates.sh $WWWROOT/Conf $WWWROOT/Conf
+/render-templates.sh /etc/nginx/sites-available /etc/nginx/sites-enabled
 
 # Start supervisord and services
 /usr/bin/supervisord -n -c /etc/supervisord.conf
