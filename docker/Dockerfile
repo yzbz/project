@@ -1,9 +1,10 @@
 FROM alpine:3.4
 
-MAINTAINER ngineered <support@ngineered.co.uk>
+#MAINTAINER ngineered <support@ngineered.co.uk>
 
 ENV php_conf /etc/php5/php.ini 
 ENV fpm_conf /etc/php5/php-fpm.conf
+ENV WWWROOT /var/www/html
 
 RUN apk add --no-cache bash \
     openssh-client \
@@ -51,8 +52,9 @@ mkdir -p /etc/nginx/sites-enabled/ && \
 mkdir -p /etc/nginx/ssl/ && \
 rm -Rf /var/www/* && \
 mkdir /var/www/html/
-ADD conf/nginx-site.conf.tmpl /etc/nginx/sites-available/default.conf.tmpl
-#RUN ln -s /etc/nginx/sites-available/default.conf /etc/nginx/sites-enabled/default.conf
+
+ADD conf/nginx-site.conf /etc/nginx/sites-available/default.conf
+RUN ln -s /etc/nginx/sites-available/default.conf /etc/nginx/sites-enabled/default.conf
 
 # tweak php-fpm config
 RUN sed -i -e "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g" ${php_conf} && \
@@ -76,10 +78,10 @@ ln -s /etc/php5/php.ini /etc/php5/conf.d/php.ini && \
 find /etc/php5/conf.d/ -name "*.ini" -exec sed -i -re 's/^(\s*)#(.*)/\1;\2/g' {} \;
 
 # Add Scripts
-#ADD  scripts/render-templates.sh /render-templates.sh
-#ADD  scripts/substitute-env-vars.sh /substitute-env-vars.sh
-
+ADD  scripts/render-templates.sh /render-templates.sh
+ADD  scripts/substitute-env-vars.sh /substitute-env-vars.sh
 ADD scripts/start.sh /start.sh
+
 #ADD scripts/pull /usr/bin/pull
 #ADD scripts/push /usr/bin/push
 #RUN chmod 755 /usr/bin/pull && chmod 755 /usr/bin/push
@@ -89,7 +91,6 @@ RUN chmod +x /*.sh
 # copy in code
 #ADD src/ /var/www/html/
 
-ENV WWWROOT /var/www/html
 
 EXPOSE 443 80
 
