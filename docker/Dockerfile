@@ -1,6 +1,6 @@
 FROM alpine:3.4
 
-#MAINTAINER ngineered <support@ngineered.co.uk>
+MAINTAINER yzbz <zhangpeng_bug@qq.com>
 
 ENV php_conf /etc/php5/php.ini 
 ENV fpm_conf /etc/php5/php-fpm.conf
@@ -8,6 +8,7 @@ ENV WWWROOT /var/www/html
 
 RUN apk add --no-cache bash \
     openssh-client \
+    perl \
     wget \
     nginx \
     supervisor \

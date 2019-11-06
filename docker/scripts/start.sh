@@ -44,7 +44,7 @@ fi
 #    value=$(echo "$i" | cut -d'=' -f2)
 #    if [[ "$variable" != '%s' ]] ; then
 #      replace='\$\$_'${variable}'_\$\$'
-#      find /var/www/html -type f -exec sed -i -e 's/'${replace}'/'${value}'/g' {} \;
+#      find /etc/nginx/sites-available/ -type f -exec sed -i -e 's/'${replace}'/'${value}'/g' {} \;
 #    fi
 #  done
 #fi
