@@ -86,7 +86,9 @@ RUN chmod 755 /usr/bin/pull && chmod 755 /usr/bin/push
 RUN chmod 755 /start.sh
 
 # copy in code
-ADD src/ /var/www/html/
+#ADD src/ /var/www/html/
+
+ENV WWWROOT /var/www/html
 
 EXPOSE 443 80
 
