@@ -81,7 +81,7 @@ find /etc/php5/conf.d/ -name "*.ini" -exec sed -i -re 's/^(\s*)#(.*)/\1;\2/g' {}
 # Add Scripts
 ADD  scripts/render-templates.sh /render-templates.sh
 ADD  scripts/substitute-env-vars.sh /substitute-env-vars.sh
-ADD scripts/start.sh /start.sh
+ADD  scripts/start.sh /start.sh
 
 #ADD scripts/pull /usr/bin/pull
 #ADD scripts/push /usr/bin/push
@@ -89,6 +89,11 @@ ADD scripts/start.sh /start.sh
 RUN chmod 755 /start.sh
 
 RUN chmod +x /*.sh
+
+RUN /usr/bin/dos2unix /start.sh
+RUN /usr/bin/dos2unix /render-templates.sh
+RUN /usr/bin/dos2unix /substitute-env-vars.sh
+
 # copy in code
 #ADD src/ /var/www/html/
 
